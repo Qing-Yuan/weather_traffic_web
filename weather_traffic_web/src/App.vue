@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <b-row>
+      Date
+      <input type="date" class="form-control" id="date" v-model="date">
+      <!-- <div>date selected: <strong>{{ date }}</strong></div> -->
+      Time
+      <input type="time" class="form-control" id="time" v-model="time">
+      <!-- <div>time selected: <strong>{{ time }}</strong></div> -->
+    </b-row>
+    <b-row>
+      <b-form-select v-model="selectedItem">
+          <option value="Action">Action</option>
+          <option value="Another action">Another action</option>
+          <option value="Something else here">Something else here</option>
+      </b-form-select>
+      <!-- <div>selectedItem: <strong>{{ selectedItem }}</strong></div> -->
+      DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    </b-row>
+    DisplayScreenShotHere
   </div>
 </template>
 
@@ -24,7 +26,10 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      selectedItem: '',
+      date: '',
+      time: ''
     }
   }
 }
