@@ -4,6 +4,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 new Vue({
   el: '#app',
+  components: { App },
   render: h => h(App)
 })
 

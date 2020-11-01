@@ -9,27 +9,41 @@
       <!-- <div>time selected: <strong>{{ time }}</strong></div> -->
     </b-row>
     <b-row>
-      <b-form-select v-model="selectedItem">
-          <option value="Action">Action</option>
-          <option value="Another action">Another action</option>
-          <option value="Something else here">Something else here</option>
+      <b-form-select v-model="selectedItem" text="Select a Location" :options="locations">
       </b-form-select>
       <!-- <div>selectedItem: <strong>{{ selectedItem }}</strong></div> -->
-      DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+      DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     </b-row>
     DisplayScreenShotHere
+    <b-button @click="getLocations">
+      Click me
+    </b-button>
   </div>
 </template>
 
 <script>
+// import GetLocations from '@/services/GetLocations'
+import axios from 'axios'
 export default {
   name: 'app',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      selectedItem: '',
-      date: '',
-      time: ''
+      selectedItem: null,
+      date: null,
+      time: null,
+      locations: [
+        {
+          text: 'Please select a Location',
+          value: null
+        }
+      ]
+    }
+  },
+  methods: {
+    async getLocations () {
+      const response = await axios.get('https://api.data.gov.sg/v1/transport/traffic-images?date_time=2020-10-29T12%3A00%3A00')
+      console.log(response)
     }
   }
 }
