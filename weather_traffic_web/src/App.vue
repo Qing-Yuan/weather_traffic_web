@@ -12,6 +12,11 @@
       </b-col>
       <!-- <div>time selected: <strong>{{ time }}</strong></div> -->
     </b-row>
+    <b-row class="justify-content-md-center">
+      <div class="error">
+        {{ error }}
+      </div>
+    </b-row>
     <br>
     <b-row class="justify-content-md-center">
       <b-col lg="5">
@@ -40,6 +45,7 @@ export default {
       selectedItem: null,
       date: null,
       time: null,
+      error: "",
       locations: [
         {
           text: 'Please select a Location',
@@ -50,18 +56,23 @@ export default {
   },
   methods: {
     async getLocations () {
-      var url = "https://api.data.gov.sg/v1/transport/traffic-images?date_time="
-      var splitTime = time.value.split(":")
-      url = url.concat(date.value, "T", splitTime[0], "%3A", splitTime[1], "%3A00")
-      console.log(url)
-      const response = await axios.get(url)
-      var i
-      var locations = []
-      locations.push({ text: "Please select a location", value: null })
-      for (i = 0; i < response.data.items[0].cameras.length; i++) {
-        locations.push({ value:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude, text:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude })
+      if (date.value == "" || time.value == "") {
+        this.error = "Date or Time is missing, please fill in and try again"
+      } else {
+        var url = "https://api.data.gov.sg/v1/transport/traffic-images?date_time="
+        var splitTime = time.value.split(":")
+        url = url.concat(date.value, "T", splitTime[0], "%3A", splitTime[1], "%3A00")
+        console.log(url)
+        const response = await axios.get(url)
+        var i
+        var locations = []
+        locations.push({ text: "Please select a location", value: null })
+        for (i = 0; i < response.data.items[0].cameras.length; i++) {
+          locations.push({ value:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude, text:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude })
+        }
+        this.locations = locations
+        this.error = ""
       }
-      this.locations = locations
     }
   }
 }
@@ -75,22 +86,7 @@ export default {
   width: 100%;
   padding: 10px;
 }
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.error {
+  color: red;
 }
 </style>
