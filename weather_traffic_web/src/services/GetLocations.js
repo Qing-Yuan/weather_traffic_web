@@ -1,4 +1,4 @@
-import Api from '@/services/Api'
+import GetLocations from '@/services/GetLocations'
 
 export default {
     get (date, time) {

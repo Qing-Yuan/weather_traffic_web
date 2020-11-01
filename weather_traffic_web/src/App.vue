@@ -1,19 +1,27 @@
 <template>
   <div id="app">
-    <b-row>
-      Date
-      <input type="date" class="form-control" id="date" v-model="date">
+    <b-row class="justify-content-md-center">
+      <b-col cols="12" md="auto">Date</b-col>
+      <b-col lg="4">
+        <input type="date" class="form-control" id="date" v-model="date">
+      </b-col>
       <!-- <div>date selected: <strong>{{ date }}</strong></div> -->
-      Time
-      <input type="time" class="form-control" id="time" v-model="time">
+      <b-col cols="12" md="auto">Time</b-col>
+      <b-col lg="4">
+        <input type="time" class="form-control" id="time" v-model="time">
+      </b-col>
       <!-- <div>time selected: <strong>{{ time }}</strong></div> -->
     </b-row>
-    <b-row>
-      <b-form-select v-model="selectedItem" text="Select a Location" :options="locations">
-      </b-form-select>
-      <!-- <div>selectedItem: <strong>{{ selectedItem }}</strong></div> -->
-      DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    <br>
+    <b-row class="justify-content-md-center">
+      <b-col lg="5">
+        <b-form-select v-model="selectedItem" text="Select a Location" :options="locations">
+        </b-form-select>
+        <!-- <div>selectedItem: <strong>{{ selectedItem }}</strong></div> -->
+      </b-col>
+      <b-col cols="12" md="auto">DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee </b-col>
     </b-row>
+    <br>
     DisplayScreenShotHere
     <b-button @click="getLocations">
       Click me
@@ -42,8 +50,18 @@ export default {
   },
   methods: {
     async getLocations () {
-      const response = await axios.get('https://api.data.gov.sg/v1/transport/traffic-images?date_time=2020-10-29T12%3A00%3A00')
-      console.log(response)
+      var url = "https://api.data.gov.sg/v1/transport/traffic-images?date_time="
+      var splitTime = time.value.split(":")
+      url = url.concat(date.value, "T", splitTime[0], "%3A", splitTime[1], "%3A00")
+      console.log(url)
+      const response = await axios.get(url)
+      var i
+      var locations = []
+      locations.push({ text: "Please select a location", value: null })
+      for (i = 0; i < response.data.items[0].cameras.length; i++) {
+        locations.push({ value:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude, text:response.data.items[0].cameras[i].location.latitude + " " + response.data.items[0].cameras[i].location.longitude })
+      }
+      this.locations = locations
     }
   }
 }
@@ -51,12 +69,11 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: auto;
+  width: 100%;
+  padding: 10px;
 }
 
 h1, h2 {
