@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <b-row class="justify-content-md-center">
-      <b-col cols="12" md="auto">Date</b-col>
+      <b-col class="my-auto" cols="12" md="auto">Date</b-col>
       <b-col lg="4">
         <input type="date" class="form-control" id="date" v-model="date">
       </b-col>
       <!-- <div>date selected: <strong>{{ date }}</strong></div> -->
-      <b-col cols="12" md="auto">Time</b-col>
+      <b-col class="my-auto" cols="12" md="auto">Time</b-col>
       <b-col lg="4">
         <input type="time" class="form-control" id="time" v-model="time">
       </b-col>
@@ -24,7 +24,7 @@
         </b-form-select>
         <!-- <div>selectedItem: <strong>{{ selectedItem }}</strong></div> -->
       </b-col>
-      <b-col cols="12" md="auto">DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee </b-col>
+      <b-col class="my-auto" cols="12" md="auto">DisplayWeatherHereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee </b-col>
     </b-row>
     <br>
     DisplayScreenShotHere
@@ -41,7 +41,6 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       selectedItem: null,
       date: null,
       time: null,
@@ -57,7 +56,7 @@ export default {
   methods: {
     async getLocations () {
       if (date.value == "" || time.value == "") {
-        this.error = "Date or Time is missing, please fill in and try again"
+        this.error = "Date or Time is missing, please fill in and try again!"
       } else {
         var url = "https://api.data.gov.sg/v1/transport/traffic-images?date_time="
         var splitTime = time.value.split(":")
