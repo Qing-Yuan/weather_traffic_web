@@ -35,7 +35,7 @@
         </b-col>
       </b-row>
       <br>
-      DisplayScreenShotHere
+      <a :href="imageLink">Download Traffic Cam</a>
     </b-container>
   </div>
 </template>
@@ -51,16 +51,12 @@ export default {
       date: null,
       time: null,
       error: "",
-      locations: [
-        {
-          text: 'Please select a Location',
-          value: null
-        }
-      ],
+      locations: [],
       traffic: null,
       weather: null,
       forecast: null,
-      imagesMap: null
+      imagesMap: null,
+      imageLink: null
     }
   },
   methods: {
@@ -111,6 +107,24 @@ export default {
       if (this.forecast.value == "") {
         this.forecast = "No available forecast"
       }
+
+      this.imageLink = this.imagesMap[this.selectedItem]
+      // const image = await axios.get(this.imagesMap[this.selectedItem])
+      // console.log(image)
+      // axios({
+      //   url: this.imagesMap[this.selectedItem],
+      //   method: 'GET',
+      //   responseType: 'blob',
+      // }).then((response) => {
+      //     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+      //     var fileLink = document.createElement('a');
+
+      //     fileLink.href = fileURL;
+      //     fileLink.setAttribute('download', 'image.pdf');
+      //     document.body.appendChild(fileLink);
+
+      //     fileLink.click();
+      // });
     }
   },
   watch: {
